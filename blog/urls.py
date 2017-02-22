@@ -1,4 +1,4 @@
-from django.conf.urls import urllib
+from django.conf.urls import url
 
 from . import views
 
