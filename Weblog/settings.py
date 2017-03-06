@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'blog.apps.BlogConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,9 +77,9 @@ WSGI_APPLICATION = 'Weblog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tutorielDjango',
-		'USER': 'postgres',
-		'PASSWORD': 'pass',
+        'NAME': 'weblog',
+		'USER': 'weblog',
+		'PASSWORD': 'weblog',
 		'HOST': '127.0.0.1',
 		'PORT': '5432',
     }
