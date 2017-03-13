@@ -1,6 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.utils import timezone
+from .models import Article
+
 
 # Create your views here.
 def index(request):
-    return HttpResponse("Hello,world!")
+	
+	#Tri les articles selon la date de publication
+	articles = Article.objects.filter(date__lte=timezone.now()).order_by('date')
+    
+	return render(request, 'blog/index.html', {'articles': articles})
