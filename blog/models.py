@@ -15,11 +15,11 @@ class Tag(models.Model):
 
 class Article(models.Model):
     title = models.CharField(max_length=134)
-    date = models.DateField()
+    date = models.DateField(auto_now_add=True)
     body = models.TextField()
-    categories = models.ManyToManyField(Category)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    tags = models.ManyToManyField(Tag)
+    categories = models.ManyToManyField('Category')
+    author = models.ForeignKey('User', on_delete=models.CASCADE)
+    tags = models.ManyToManyField('Tag')
     slug = models.SlugField(primary_key=True)
 
 
@@ -27,5 +27,5 @@ class Comment(models.Model):
     author = models.CharField(max_length=30)
     content = models.CharField(max_length=1000)
     email = models.EmailField()
-    date = models.DateField()
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    date = models.DateField(True)
+    article = models.ForeignKey('Article', on_delete=models.CASCADE)
