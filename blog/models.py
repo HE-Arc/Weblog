@@ -6,16 +6,22 @@ from django.db.models import permalink
 class Category(models.Model):
     name = models.CharField(primary_key=True, max_length=50)
 
+    def __str__(self):
+        return self.name
 
 class User(models.Model):
     name = models.CharField(max_length=100)
     # infos: stuff about user
     infos = models.CharField(max_length=1000)
 
+    def __str__(self):
+        return self.name
 
 class Tag(models.Model):
     name = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.name
 
 class Article(models.Model):
     title = models.CharField(max_length=134)
@@ -32,7 +38,6 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
-	
 
     def __unicode__(self):
         return '%s' % self.title
@@ -48,3 +53,6 @@ class Comment(models.Model):
     email = models.EmailField()
     date = models.DateField(True)
     article = models.ForeignKey('Article', on_delete=models.CASCADE)
+
+    # def __str__(self):
+    #     return (self.email + self.date)
