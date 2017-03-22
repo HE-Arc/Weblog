@@ -3,6 +3,7 @@ from django.utils import timezone
 from .models import Article
 
 
+
 # Create your views here.
 def index(request):
 	
