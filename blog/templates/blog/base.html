@@ -1,22 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="style.css" />
-    <title>{% block title %}My amazing site{% endblock %}</title>
-</head>
+{% load static %}<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<link href="{% static 'blog/src/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+		<link rel="stylesheet" href="{% static 'blog/src/blog.css' %}">
+		<script src="{% static 'blog/src/jquery-3.1.1.js' %}"></script>
+		<script src="{% static 'blog/src/bootstrap/js/bootstrap.min.js' %}"></script>
+		<title>Weblog</title>
+	</head>
+	<body>
 
-<body>
-    <div id="sidebar">
-        {% block sidebar %}
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/blog/">Blog</a></li>
-        </ul>
-        {% endblock %}
-    </div>
+		<div class="container">
+			<div class="blog-header">
+				<h1 class="blog-title">Weblog</h1>
+			</div>
+		</div>
 
-    <div id="content">
-        {% block content %}{% endblock %}
-    </div>
-</body>
+			<div class="blog-masthead">
+			  <div class="container">
+				<nav class="blog-nav">
+				  <a class="blog-nav-item active" href="/">Home</a>
+				  <a class="blog-nav-item" href="#">About</a>
+				</nav>
+			  </div>
+			</div>
+
+		<div class="container">
+		  <div class="row">
+			<div class="col-sm-8 blog-main" id="content">
+			  <!-- {% block content %}{% endblock %} -->
+			  <!-- intérieur du div à supprimer quand le template inheritance fonctionnera -->
+			  {% for article in articles %}
+				<div class="blog-post">
+					<h2 class="blog-post-title">{{ article.title }}</h2>
+					<p class="blog-post-meta">{{ article.date }} by <a href="#">{{ article.author }}</a></p>
+					<p>{{article.body}}</p>
+				</div><!-- /.blog-post -->
+			  {% endfor %}
+			  
+			  <nav>
+				<ul class="pager">
+				  <li><a href="#">Previous</a></li>
+				  <li><a href="#">Next</a></li>
+				</ul>
+			  </nav>
+
+			  
+			</div><!-- /.blog-main -->
+			<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+			  <div class="sidebar-module sidebar-module-inset">
+				<h4>About</h4>
+				<p>{{user.infos}} Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+			  </div>
+			</div><!-- /.blog-sidebar -->
+		  </div><!-- /.row -->
+		</div><!-- /.container -->
+
+		<footer class="blog-footer">
+		  <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+		  <p>
+			<a href="/">Back to top</a>
+		  </p>
+		</footer>
+
+    </body>
 </html>

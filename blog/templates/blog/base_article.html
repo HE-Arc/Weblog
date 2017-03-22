@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<nav>
+		<ul class="pager">
+		  <li><a href="#">Previous Article</a></li>
+		  <li><a href="#">Next Article</a></li>
+		</ul>
+	 </nav>
+	 <div class="blog-post">
+		<h2 class="blog-post-title">{{ article.title }}</h2>
+		<p class="blog-post-meta">{{ article.date }} by <a href="#">{{ article.author }}</a></p>
+		<p>{{article.body}}</p>
+	</div><!-- /.blog-post -->
+	
+	<!-- Partie commentaires -->
+	
+{% endblock %}
