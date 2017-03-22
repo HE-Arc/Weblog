@@ -10,4 +10,4 @@ def index(request):
 	#Tri les articles selon la date de publication
 	articles = Article.objects.filter(date__lte=timezone.now()).order_by('date')
     
-	return render(request, 'blog/index.html', {'articles': articles})
+	return render(request, 'blog/base.html', {'articles': articles})

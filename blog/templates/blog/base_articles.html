@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for article in articles %}
+	 <div class="blog-post">
+		<h2 class="blog-post-title">{{ article.title }}</h2>
+		<p class="blog-post-meta">{{ article.title }}<a href="#">{{ article.user }}</a></p>
+		<p>{{article.body}}</p>
+	</div><!-- /.blog-post -->
+{% endfor %}
+{% endblock %}
