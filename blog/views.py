@@ -5,7 +5,7 @@ from .models import User
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.views import View
-# from .forms import AuthForm
+from .forms import PostArticleForm
 from django.contrib.auth import authenticate, login
 
 
@@ -18,15 +18,16 @@ class Index(View):
         return render(request, 'blog/base.html', {'articles': articles, 'user': user})
 
 
-# class AdminAuth(View):
-#     def get(self, request):
-#         form = AuthForm(request.POST)
-#         if form.is_valid():
-#             return HttpResponseRedirect('/thanks/')
-#         else:
-#             form = AuthForm()
-#
-#         return render(request, 'blog/login.html', {'form': form})
+class PostArticleForm(View):
+    def create_article(self, request):
+        form = PostArticleForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/thanks/')
+        else:
+            form = PostArticleForm()
+
+        return render(request, 'blog/create_article.html', {'form': form})
+
 
 class AuthView(View):
     def get(self, request):
