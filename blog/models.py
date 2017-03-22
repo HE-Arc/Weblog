@@ -1,17 +1,21 @@
 from django.db import models
+from django.db.models import permalink
 
 
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(primary_key=True, max_length=50)
 
+
 class User(models.Model):
     name = models.CharField(max_length=100)
     # infos: stuff about user
     infos = models.CharField(max_length=1000)
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=20)
+
 
 class Article(models.Model):
     title = models.CharField(max_length=134)
@@ -21,6 +25,13 @@ class Article(models.Model):
     author = models.ForeignKey('User', on_delete=models.CASCADE)
     tags = models.ManyToManyField('Tag')
     slug = models.SlugField(primary_key=True)
+
+    def __unicode__(self):
+        return '%s' % self.title
+
+    @permalink
+    def get_absolute_url(self):
+        return ('view_article_post', None, {'slug': self.slug})
 
 
 class Comment(models.Model):
