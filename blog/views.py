@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Article, User
+from .models import Article
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.views import View
@@ -22,8 +22,11 @@ class ArticleNewForm(CreateView):
     model = Article
     fields = ["title", "body"]
 
+
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.author_id = self.request.user.pk
+
+        form.instance.published_date = timezone.now()
         # ...
         return super().form_valid(form)
 

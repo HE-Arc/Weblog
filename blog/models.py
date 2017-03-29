@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import permalink
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
 
 # Create your models here.
@@ -10,13 +11,17 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-class User(models.Model):
-    name = models.CharField(max_length=100)
-    # infos: stuff about user
-    infos = models.CharField(max_length=1000)
 
-    def __str__(self):
-        return self.name
+#
+# class User(models.Model):
+#     name = models.CharField(max_length=100)
+#     # infos: stuff about user
+#     infos = models.CharField(max_length=1000)
+#
+#     def __str__(self):
+#         return self.name
+
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=20)
@@ -24,15 +29,20 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+
 class Article(models.Model):
     title = models.CharField(max_length=134)
     date = models.DateField(auto_now_add=True)
     body = models.TextField()
     categories = models.ManyToManyField('Category')
-    author = models.ForeignKey('User', on_delete=models.CASCADE)
+    # author = models.ForeignKey('User', on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
     tags = models.ManyToManyField('Tag')
     slug = models.SlugField(primary_key=True)
-	
+
     def publish(self):
         self.date = timezone.now()
         self.save()
