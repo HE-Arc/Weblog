@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import permalink
+from django.core.urlresolvers import reverse
 
 
 # Create your models here.
@@ -44,7 +45,8 @@ class Article(models.Model):
 
     @permalink
     def get_absolute_url(self):
-        return ('view_article_post', None, {'slug': self.slug})
+        return reverse('index')
+        #  return ('view_article_post', None, {'slug': self.slug})
 
 
 class Comment(models.Model):
