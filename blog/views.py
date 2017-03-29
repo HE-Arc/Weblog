@@ -25,7 +25,7 @@ class ArticleNewForm(CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         # ...
-        return super(ArticleNewForm, self).form_valid(form)
+        return super().form_valid(form)
 
 
 # class PostArticleForm(View):
@@ -37,6 +37,35 @@ class ArticleNewForm(CreateView):
 #     def post(self, request):
 #         form = PostArticleForm()
 #         return render(request, 'blog/article_form.html', {'form': form})
+
+class PostTest(View):
+    def post(self, request):
+        if request.method == 'POST':
+            form = PostArticleForm(request.POST)
+            if form.is_valid():
+                # post = form.save(commit=False)
+                # post.author = request.user
+                # post.published_date = timezone.now()
+                # post.save()
+                # print("~~~~~~~~~~~~~~~~~~DEBUG~~~~~~~~~~~~")
+                # print(request.user.name)
+                # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+
+                # curUser = User.objects.get(self.request.user)
+                #
+                # article = Article(author=curUser, title=title, body=body)
+                # article.save()
+                return HttpResponseRedirect('index')
+        else:
+            form = PostArticleForm()
+
+        return render(request, 'blog/article_form.html', {'form': form})
+
+    def get(self, request):
+        form = PostArticleForm()
+
+        return render(request, 'blog/article_form.html', {'form': form})
 
 
 class AuthView(View):
