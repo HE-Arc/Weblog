@@ -44,7 +44,7 @@ class Article(models.Model):
     slug = models.SlugField(primary_key=True)
 
     def publish(self):
-        self.date = timezone.now()
+        # self.date = timezone.now()
         self.save()
 
     def __str__(self):
@@ -53,10 +53,10 @@ class Article(models.Model):
     def __unicode__(self):
         return '%s' % self.title
 
-    @permalink
+    # @models.permalink
     def get_absolute_url(self):
-        return reverse('index')
-        #  return ('view_article_post', None, {'slug': self.slug})
+        # return ('index')
+        return reverse('index', args=[str(self.id)])
 
 
 class Comment(models.Model):
