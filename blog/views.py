@@ -14,8 +14,7 @@ class Index(View):
     def get(self, request):
         # Tri les articles selon la date de publication
         articles = Article.objects.filter(date__lte=timezone.now()).order_by('date')
-        user = User.objects
-        return render(request, 'blog/base.html', {'articles': articles, 'user': user})
+        return render(request, 'blog/base.html', {'articles': articles, 'user': self.request.user.pk})
 
 
 class ArticleNewForm(CreateView):
