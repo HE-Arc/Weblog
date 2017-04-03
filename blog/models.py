@@ -51,9 +51,9 @@ class Article(models.Model):
         return self.title
 
     def __unicode__(self):
-        return self.title
+        return title
 
-    # @models.permalink
+    # @permalink
     def get_absolute_url(self):
         # return ('index')
         return reverse('index', args=[str(self.id)])
