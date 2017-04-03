@@ -51,7 +51,7 @@ class Article(models.Model):
         return self.title
 
     def __unicode__(self):
-        return '%s' % self.title
+        return self.title
 
     # @models.permalink
     def get_absolute_url(self):
