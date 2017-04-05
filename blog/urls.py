@@ -6,4 +6,5 @@ urlpatterns = [
     url(r'^$', Index.as_view(), name="index"),
     url(r'^newArticle/$', ArticleNewForm.as_view()),
     url('^', include('django.contrib.auth.urls')),
+    url('^markdownx/', include('markdownx.urls')),
 ]

@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -39,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'markdownx',
 ]
 
 MIDDLEWARE = [
@@ -71,7 +71,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Weblog.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
@@ -79,13 +78,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'weblog',
-		'USER': 'weblog',
-		'PASSWORD': 'weblog',
-		'HOST': '127.0.0.1',
-		'PORT': '5432',
+        'USER': 'weblog',
+        'PASSWORD': 'weblog',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -105,7 +103,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -119,8 +116,19 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/static/markdown/'
+
+
+# MARKDOWNX_MARKDOWN_EXTENSIONS = []
+# MARKDOWNX_MARKDOWN_EXTENSION_CONFIGS = {}
+# MARKDOWNX_URLS_PATH = '/markdownx/markdownify/' # Urls path that returns compiled markdown text. Change this path to your custom app url. That could i.e. enable do some additional work with compiled markdown text.
+MARKDOWNX_UPLOAD_URLS_PATH = '/markdownx/upload/' # Urls path for uploading image on text-editor. Will return markdown notation of the image. Change this path to your custom app url.
+MARKDOWNX_MEDIA_PATH = 'markdownx/' # subdirectory, where images will be stored in MEDIA_ROOT folder
+MARKDOWNX_UPLOAD_MAX_SIZE = 52428800 # 50MB
+MARKDOWNX_UPLOAD_CONTENT_TYPES = ['image/jpeg', 'image/png']
+MARKDOWNX_IMAGE_MAX_SIZE = {'size': (500, 500), 'quality': 90,}
+MARKDOWNX_EDITOR_RESIZABLE = True # update editor's height to inner content height while typing

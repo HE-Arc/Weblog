@@ -7,6 +7,8 @@ from django.views import View
 from django.views.generic import CreateView
 from .forms import PostArticleForm
 from django.contrib.auth import authenticate, login
+from django_markdown.widgets import MarkdownWidget
+from django import forms
 
 
 # Create your views here.
@@ -19,8 +21,9 @@ class Index(View):
 
 class ArticleNewForm(CreateView):
     model = Article
-    fields = ["title", "body"]
 
+    derp=forms.CharField(widget=MarkdownWidget())
+    fields = ["title", "body"]
     # TODO: succes url
     success_url = '/weblog/'
 

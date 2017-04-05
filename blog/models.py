@@ -3,6 +3,7 @@ from django.db.models import permalink
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from autoslug import AutoSlugField
+from markdownx.models import MarkdownxField
 
 # Create your models here.
 class Category(models.Model):
@@ -33,7 +34,9 @@ class Tag(models.Model):
 class Article(models.Model):
     title = models.CharField(max_length=134)
     date = models.DateField(auto_now_add=True)
-    body = models.TextField()
+    # body = models.TextField()
+    body = MarkdownxField()
+
     categories = models.ManyToManyField('Category')
     # author = models.ForeignKey('User', on_delete=models.CASCADE)
     author = models.ForeignKey(
@@ -41,7 +44,7 @@ class Article(models.Model):
         on_delete=models.CASCADE,
     )
     tags = models.ManyToManyField('Tag')
-    slug = AutoSlugField(populate_from='title',primary_key=True)
+    slug = AutoSlugField(populate_from='title', primary_key=True)
 
     def publish(self):
         # self.date = timezone.now()
@@ -57,6 +60,12 @@ class Article(models.Model):
     def get_absolute_url(self):
         # return ('index')
         return reverse('index', args=[str(self.id)])
+
+    # @property
+    # def formatted_markdown(self):
+    #     return markdownify(self.body)
+
+
 
 
 class Comment(models.Model):
