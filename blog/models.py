@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import permalink
 from django.core.urlresolvers import reverse
 from django.conf import settings
-
+from autoslug import AutoSlugField
 
 # Create your models here.
 class Category(models.Model):
@@ -41,7 +41,7 @@ class Article(models.Model):
         on_delete=models.CASCADE,
     )
     tags = models.ManyToManyField('Tag')
-    slug = models.SlugField(primary_key=True)
+    slug = AutoSlugField(populate_from='title',primary_key=True)
 
     def publish(self):
         # self.date = timezone.now()
