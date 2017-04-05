@@ -1,17 +1,25 @@
-{% extends "base.html" %}
+{% extends "blog/base.html" %}
 
 {% block content %}
+	{% if articles.has_other_pages %}
 	<nav>
 		<ul class="pager">
-		  <li><a href="#">Previous Article</a></li>
-		  <li><a href="#">Next Article</a></li>
+			{% if articles.has_previous %}
+			<li><a href="?page={{ articles.previous_page_number }}">Previous</a></li>
+			{% endif %}
+			{% if articles.has_next %}
+			<li><a href="?page={{ articles.next_page_number }}">Next</a></li>
+			{% endif %}
 		</ul>
 	 </nav>
-	 <div class="blog-post">
+	{% endif %}
+{% for article in articles %}
+	<div class="blog-post">
 		<h2 class="blog-post-title">{{ article.title }}</h2>
 		<p class="blog-post-meta">{{ article.date }} by <a href="#">{{ article.author }}</a></p>
 		<p>{{article.body}}</p>
 	</div><!-- /.blog-post -->
+{% endfor %}
 	
 	<!-- Partie commentaires -->
 	
