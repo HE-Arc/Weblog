@@ -21,16 +21,15 @@ class ArticleNewForm(CreateView):
     model = Article
     fields = ["title", "body"]
 
-    # ^TODO: succes url
+    # TODO: succes url
     success_url = '/weblog/'
 
     def form_valid(self, form):
         form.instance.author_id = self.request.user.pk
         form.instance.date = timezone.now()
+        form.instance.slug = form.instance.title
 
         return super().form_valid(form)
-
-
 
 
 # ##DEPRECATED
