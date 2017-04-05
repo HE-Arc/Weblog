@@ -7,13 +7,24 @@ from django.views import View
 from django.views.generic import CreateView
 from .forms import PostArticleForm
 from django.contrib.auth import authenticate, login
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # Create your views here.
 class Index(View):
     def get(self, request):
         # Tri les articles selon la date de publication
-        articles = Article.objects.filter(date__lte=timezone.now()).order_by('date')
+        articles_full_list = Article.objects.filter(date__lte=timezone.now()).order_by('-date')
+        
+		#Pagination
+        page = request.GET.get('page', 1)
+        paginator = Paginator(articles_full_list, 10)
+        try:
+            articles = paginator.page(page)
+        except PageNotAnInteger:
+            articles = paginator.page(1)
+        except EmptyPage:
+            articles = paginator.page(paginator.num_pages)
         return render(request,'blog/base_index.html', {'articles': articles, 'user': self.request.user.pk})
 
 

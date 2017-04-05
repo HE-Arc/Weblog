@@ -41,7 +41,7 @@ class Article(models.Model):
         on_delete=models.CASCADE,
     )
     tags = models.ManyToManyField('Tag')
-    slug = AutoSlugField(populate_from='title',primary_key=True)
+    slug = AutoSlugField(populate_from='title', primary_key=True)
 
     def publish(self):
         # self.date = timezone.now()
