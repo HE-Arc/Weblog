@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from autoslug import AutoSlugField
 from markdownx.models import MarkdownxField
+from markdownx.utils import markdownify
 
 # Create your models here.
 class Category(models.Model):
@@ -45,6 +46,10 @@ class Article(models.Model):
     )
     tags = models.ManyToManyField('Tag')
     slug = AutoSlugField(populate_from='title', primary_key=True)
+
+    @property
+    def formatted_markdown(self):
+        return markdownify(self.body)
 
     def publish(self):
         # self.date = timezone.now()

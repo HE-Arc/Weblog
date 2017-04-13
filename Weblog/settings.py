@@ -128,8 +128,9 @@ MEDIA_URL = '/media/'
 # MEDIA_ROOT = 'C:/Users/lance/Documents/localDev/resWeblog/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-
-MARKDOWNX_MARKDOWN_EXTENSIONS = []
+MARKDOWNX_MARKDOWN_EXTENSIONS = ['markdown.extensions.extra',
+                                 'markdown.extensions.nl2br',
+                                 'markdown.extensions.smarty', ]
 MARKDOWNX_MARKDOWN_EXTENSION_CONFIGS = {}
 
 MARKDOWNX_URLS_PATH = '/markdownx/markdownify/'  # Urls path that returns compiled markdown text. Change this path to your custom app url. That could i.e. enable do some additional work with compiled markdown text.

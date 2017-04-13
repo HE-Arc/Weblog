@@ -17,7 +17,7 @@
 	<div class="blog-post">
 		<h2 class="blog-post-title">{{ article.title }}</h2>
 		<p class="blog-post-meta">{{ article.date }} by <a href="#">{{ article.author }}</a></p>
-		<p>{{article.body}}</p>
+		<p>{{article.formatted_markdown|safe}}</p>
 	</div><!-- /.blog-post -->
 {% endfor %}
 	

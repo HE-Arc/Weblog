@@ -8,6 +8,7 @@ from django.views.generic import CreateView
 from .forms import PostArticleForm
 from django.contrib.auth import authenticate, login
 from django_markdown.widgets import MarkdownWidget
+import markdown
 from django import forms
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -69,7 +70,6 @@ class ArticleNewForm(CreateView):
         form.instance.slug = form.instance.title
 
         return super().form_valid(form)
-
 
 
 class AuthView(View):
