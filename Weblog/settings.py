@@ -119,16 +119,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+
 STATIC_URL = '/static/'
-STATIC_ROOT = '/static/markdown/'
+# STATIC_ROOT = 'C:/Users/lance/Documents/localDev/resWeblog/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+# MEDIA_ROOT = 'C:/Users/lance/Documents/localDev/resWeblog/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
-# MARKDOWNX_MARKDOWN_EXTENSIONS = []
-# MARKDOWNX_MARKDOWN_EXTENSION_CONFIGS = {}
-# MARKDOWNX_URLS_PATH = '/markdownx/markdownify/' # Urls path that returns compiled markdown text. Change this path to your custom app url. That could i.e. enable do some additional work with compiled markdown text.
-MARKDOWNX_UPLOAD_URLS_PATH = '/markdownx/upload/' # Urls path for uploading image on text-editor. Will return markdown notation of the image. Change this path to your custom app url.
-MARKDOWNX_MEDIA_PATH = 'markdownx/' # subdirectory, where images will be stored in MEDIA_ROOT folder
-MARKDOWNX_UPLOAD_MAX_SIZE = 52428800 # 50MB
+MARKDOWNX_MARKDOWN_EXTENSIONS = []
+MARKDOWNX_MARKDOWN_EXTENSION_CONFIGS = {}
+
+MARKDOWNX_URLS_PATH = '/markdownx/markdownify/'  # Urls path that returns compiled markdown text. Change this path to your custom app url. That could i.e. enable do some additional work with compiled markdown text.
+MARKDOWNX_UPLOAD_URLS_PATH = '/markdownx/upload/'  # Urls path for uploading image on text-editor. Will return markdown notation of the image. Change this path to your custom app url.
+MARKDOWNX_MEDIA_PATH = 'markdownx/'  # subdirectory, where images will be stored in MEDIA_ROOT folder
+
+MARKDOWNX_UPLOAD_MAX_SIZE = 52428800  # 50MB
 MARKDOWNX_UPLOAD_CONTENT_TYPES = ['image/jpeg', 'image/png']
-MARKDOWNX_IMAGE_MAX_SIZE = {'size': (500, 500), 'quality': 90,}
-MARKDOWNX_EDITOR_RESIZABLE = True # update editor's height to inner content height while typing
+MARKDOWNX_IMAGE_MAX_SIZE = {'size': (500, 500), 'quality': 90, }
+MARKDOWNX_EDITOR_RESIZABLE = True  # update editor's height to inner content height while typing

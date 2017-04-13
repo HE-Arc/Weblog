@@ -17,8 +17,8 @@ class Index(View):
     def get(self, request):
         # Tri les articles selon la date de publication
         articles_full_list = Article.objects.filter(date__lte=timezone.now()).order_by('-date')
-        
-		#Pagination
+
+        # Pagination
         page = request.GET.get('page', 1)
         paginator_index = Paginator(articles_full_list, 10)
         try:
@@ -27,37 +27,38 @@ class Index(View):
             articles = paginator_index.page(1)
         except EmptyPage:
             articles = paginator_index.page(paginator_index.num_pages)
-        return render(request,'blog/base_index.html', {'articles': articles, 'user': self.request.user.pk})
-		
-class ArticleView(View):
-	def get(self, request, slug):
-        # Tri les articles selon la date de publication
-		articles_full_list = Article.objects.filter(date__lte=timezone.now()).order_by('-date')
-		
-		i=0
-		#récupération de la position dans la liste
-		for article in articles_full_list:
-			i+=1
-			if article.slug == slug:
-				#très très sale
-				index = i
+        return render(request, 'blog/base_index.html', {'articles': articles, 'user': self.request.user.pk})
 
-		# Pagination
-		page = request.GET.get('page', index)
-		paginator_article = Paginator(articles_full_list, 1)
-		try:
-			articles = paginator_article.page(page)
-		except PageNotAnInteger:
-			articles = paginator_article.page(1)
-		except EmptyPage:
-			articles = paginator_article.page(paginator_article.num_pages)
-		return render(request,'blog/base_article.html', {'articles': articles, 'user': self.request.user.pk})
-		
+
+class ArticleView(View):
+    def get(self, request, slug):
+        # Tri les articles selon la date de publication
+        articles_full_list = Article.objects.filter(date__lte=timezone.now()).order_by('-date')
+
+        i = 0
+        # récupération de la position dans la liste
+        for article in articles_full_list:
+            i += 1
+            if article.slug == slug:
+                # très très sale
+                index = i
+
+        # Pagination
+        page = request.GET.get('page', index)
+        paginator_article = Paginator(articles_full_list, 1)
+        try:
+            articles = paginator_article.page(page)
+        except PageNotAnInteger:
+            articles = paginator_article.page(1)
+        except EmptyPage:
+            articles = paginator_article.page(paginator_article.num_pages)
+        return render(request, 'blog/base_article.html', {'articles': articles, 'user': self.request.user.pk})
+
 
 class ArticleNewForm(CreateView):
     model = Article
 
-    derp=forms.CharField(widget=MarkdownWidget())
+    # derp = forms.CharField(widget=MarkdownWidget())
     fields = ["title", "body"]
     # TODO: succes url
     success_url = '/weblog/'
@@ -69,36 +70,6 @@ class ArticleNewForm(CreateView):
 
         return super().form_valid(form)
 
-
-# ##DEPRECATED
-# class PostTest(View):
-#     def post(self, request):
-#         if request.method == 'POST':
-#             form = PostArticleForm(request.POST)
-#             if form.is_valid():
-#                 # post = form.save(commit=False)
-#                 # post.author = request.user
-#                 # post.published_date = timezone.now()
-#                 # post.save()
-#                 # print("~~~~~~~~~~~~~~~~~~DEBUG~~~~~~~~~~~~")
-#                 # print(request.user.name)
-#                 # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-#
-#
-#                 # curUser = User.objects.get(self.request.user)
-#                 #
-#                 # article = Article(author=curUser, title=title, body=body)
-#                 # article.save()
-#                 return HttpResponseRedirect('index')
-#         else:
-#             form = PostArticleForm()
-#
-#         return render(request, 'blog/article_form.html', {'form': form})
-#
-#     def get(self, request):
-#         form = PostArticleForm()
-#
-#         return render(request, 'blog/article_form.html', {'form': form})
 
 
 class AuthView(View):
