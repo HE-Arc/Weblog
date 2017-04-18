@@ -6,6 +6,7 @@ from autoslug import AutoSlugField
 from markdownx.models import MarkdownxField
 from markdownx.utils import markdownify
 
+
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(primary_key=True, max_length=50)
@@ -66,19 +67,30 @@ class Article(models.Model):
         # return ('index')
         return reverse('index', args=[str(self.id)])
 
-    # @property
-    # def formatted_markdown(self):
-    #     return markdownify(self.body)
-
-
+        # @property
+        # def formatted_markdown(self):
+        #     return markdownify(self.body)
 
 
 class Comment(models.Model):
     author = models.CharField(max_length=30)
     content = models.CharField(max_length=1000)
     email = models.EmailField()
-    date = models.DateField(True)
-    article = models.ForeignKey('Article', on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True)
+    article = models.ForeignKey('Article', on_delete=models.CASCADE, related_name="comments")
 
-    # def __str__(self):
-    #     return (self.email + self.date)
+    def __str__(self):
+        # return (self.email + self.date)
+        return (self.content)
+
+    def approve(self):
+        self.approved_comment = True
+        self.save()
+
+    def get_absolute_url(self):
+        # return ('index')
+        return reverse('index', args=[str(self.id)])
+
+    def publish(self):
+        # self.date = timezone.now()
+        self.save()
