@@ -95,9 +95,9 @@ class SearchView(ListView):
     #Récupère tous les articles
     comments_full_list = Comment.objects.order_by('-date')
     articles_list = None
-    for comment in comments_full_list:
-        if comment.article == article.slug: 
-            comments_article_list.add(comment)
+    # for comment in comments_full_list:
+    #     if comment.article == article.slug:
+    #         comments_article_list.add(comment)
 
 
 class add_comment_to_post(CreateView):
