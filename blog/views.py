@@ -11,6 +11,7 @@ from django_markdown.widgets import MarkdownWidget
 import markdown
 from django import forms
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import redirect
 
 
 # Create your views here.
@@ -57,19 +58,23 @@ class ArticleView(View):
 
 
 class ArticleNewForm(CreateView):
-    model = Article
+    def get(self, request):
+        if request.user.is_authenticated:
+            model = Article
 
-    # derp = forms.CharField(widget=MarkdownWidget())
-    fields = ["title", "body"]
-    # TODO: succes url
-    success_url = '/weblog/'
+            # derp = forms.CharField(widget=MarkdownWidget())
+            fields = ["title", "body"]
+            # TODO: succes url
+            success_url = '/weblog/'
 
-    def form_valid(self, form):
-        form.instance.author_id = self.request.user.pk
-        form.instance.date = timezone.now()
-        form.instance.slug = form.instance.title
+            def form_valid(self, form):
+                form.instance.author_id = self.request.user.pk
+                form.instance.date = timezone.now()
+                form.instance.slug = form.instance.title
 
-        return super().form_valid(form)
+                return super().form_valid(form)
+        else:
+            return redirect('/weblog/')
 
 
 class AuthView(View):
