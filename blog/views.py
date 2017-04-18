@@ -13,6 +13,7 @@ from django import forms
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list import ListView
 from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
@@ -20,7 +21,7 @@ class Index(ListView):
     template_name = 'blog/base_index.html'
     context_object_name = 'articles'
     paginate_by = 10
-	
+
     def get_queryset(self):
         return Article.objects.order_by('-date')
 
@@ -50,22 +51,24 @@ class ArticleView(View):
         return render(request, 'blog/base_article.html', {'articles': articles, 'user': self.request.user.pk})
 
 
-class ArticleNewForm(CreateView):
+class ArticleNewForm(LoginRequiredMixin ,CreateView):
     # def get(self, request):
     #     if request.user.is_authenticated:
-            model = Article
 
-            # derp = forms.CharField(widget=MarkdownWidget())
-            fields = ["title", "body"]
-            # TODO: succes url
-            success_url = '/weblog/'
+    model = Article
 
-            def form_valid(self, form):
-                form.instance.author_id = self.request.user.pk
-                form.instance.date = timezone.now()
-                form.instance.slug = form.instance.title
+    # derp = forms.CharField(widget=MarkdownWidget())
+    fields = ["title", "body"]
+    success_url = '/weblog/'
+    redirect_field_name = '/weblog/'
 
-                return super().form_valid(form)
+
+    def form_valid(self, form):
+        form.instance.author_id = self.request.user.pk
+        form.instance.date = timezone.now()
+        form.instance.slug = form.instance.title
+
+        return super().form_valid(form)
         # else:
         #     return redirect('/weblog/')
 
