@@ -1,0 +1,11 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+{% for article in object_list %}
+	 <div class="blog-post">
+		<h2 class="blog-post-title"><a href="/article/{{ article.slug }}">{{ article.title }}</a></h2>
+		<p class="blog-post-meta">{{ article.date }} by <a href="#">{{ article.author }}</a></p>
+		<p>{{article.formatted_markdown|safe}}</p>
+	</div><!-- /.blog-post -->
+{% endfor %}
+{% endblock %}

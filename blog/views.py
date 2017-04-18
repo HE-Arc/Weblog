@@ -88,3 +88,19 @@ class AuthView(View):
         else:
             articles = Article.objects.filter(date__lte=timezone.now()).order_by('date')
             return render(request, 'blog/index.html', {'articles': articles})
+
+class Search(ListView):
+    template_name = 'blog/base_index.html'
+		
+    #Récupère tous les articles
+    comments_full_list = Comment.objects.order_by('-date')
+    articles_list = None
+    for comment in comments_full_list:
+        if comment.article == article.slug: 
+            comments_article_list.add(comment)
+
+	
+def request_page(request):
+    if(request.GET.get('search_button')):
+        print("test")    
+    return render(request,'blog/result_search.html')
