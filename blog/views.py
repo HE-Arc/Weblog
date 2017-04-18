@@ -89,7 +89,7 @@ class AuthView(View):
             return render(request, 'blog/index.html', {'articles': articles})
 
 
-class Search(ListView):
+class SearchView(ListView):
     template_name = 'blog/base_index.html'
 		
     #Récupère tous les articles
@@ -98,12 +98,6 @@ class Search(ListView):
     for comment in comments_full_list:
         if comment.article == article.slug: 
             comments_article_list.add(comment)
-
-	
-def request_page(request):
-    if(request.GET.get('search_button')):
-        print("test")    
-    return render(request,'blog/result_search.html')
 
 
 class add_comment_to_post(CreateView):

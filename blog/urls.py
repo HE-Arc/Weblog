@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from blog.views import Index, ArticleNewForm, ArticleView,add_comment_to_post
+from blog.views import Index, ArticleNewForm, ArticleView,add_comment_to_post, SearchView
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -13,6 +13,7 @@ urlpatterns = [
     # url(r'^article/(?P<slug>[\w-]+)/comment/$', views.add_comment_to_post, name='add_comment_to_post'),
     url(r'^article/(?P<slug>[\w-]+)/comment/$', add_comment_to_post.as_view(), name='add_comment_to_post'),
     # url(r'^article/(?P<slug>\d+)/comment/$', add_comment_to_post.as_view(), name='add_comment_to_post'),
+	url(r'^/?q=[\w-]+', SearchView.as_view()),
 ]
 
 if settings.DEBUG is True:
