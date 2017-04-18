@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Article
+from .models import Article, Comment
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.views import View
@@ -45,8 +45,16 @@ class ArticleView(View):
         if index < len(articles_full_list)-1:    
             next_slug = articles_full_list[index+1].slug
         
-        return render(request, 'blog/base_article.html', {'article': article, 'user': self.request.user.pk, 'previous_slug': previous_slug, 'next_slug': next_slug})
-
+        #Récupère tous les commentaires
+        comments_full_list = Comment.objects.order_by('-date')
+        comments_article_list = None
+        for comment in comments_full_list:
+            if comment.article == article.author: #author before Lancelot implements comment_id
+                comments_article_list.add(comment)
+        return render(request, 'blog/base_article.html', {'article': article, 'user': self.request.user.pk, 'previous_slug': previous_slug, 'next_slug': next_slug, 'comments': comments_article_list})
+    
+	
+    
 
 class ArticleNewForm(LoginRequiredMixin ,CreateView):
     # def get(self, request):
