@@ -21,11 +21,12 @@
 	</div><!-- /.blog-post -->
 
 	<!-- Partie commentaires -->
-	<div class="blog-comments">
     <a class="btn btn-default" href="{% url 'add_comment_to_post' slug=article.slug %}">Add comment</a>
 	{% for comment in article.comments.all %}
+        <div class="blog-comments">
 		<p class="blog-comment-meta">{{ comment.date }} by <a href="mailto:{{comment.email}}">{{ comment.author }}</a></p>
 		<p class="blog-comment-content">{{comment.content}}</p>
+
 	{% endfor %}
 	</div><!-- /.blog-post -->
 	
