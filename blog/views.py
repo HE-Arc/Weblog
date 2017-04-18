@@ -117,8 +117,10 @@ class add_comment_to_post(CreateView):
         # form.instance.date = timezone.now()
         # form.instance.article_id = Article.objects.all()
         for article in Article.objects.all():
-            tmpSlug=self.slug_field-"comment"
-            if article.slug == tmpSlug:
+            tmpSlug=self.request.get_full_path()[:-8]
+            lst=tmpSlug.split("/")
+            # print(lst)
+            if article.slug == lst[-2]:
                 form.instance.article_id = article.pk
         # form.instance.slug = timezone.now(), self.request.user.pk
 
@@ -134,5 +136,5 @@ class add_comment_to_post(CreateView):
         #         return redirect('post_detail', pk=post.pk)
         # else:
         #     form = CommentForm()
-        # return render(request, 'blog/add_comment_to_post.html', {'form': form})
 
+        # return render(request, 'blog/add_comment_to_post.html', {'form': form})
