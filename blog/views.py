@@ -12,42 +12,39 @@ import markdown
 from django import forms
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list import ListView
+from django.views.generic import DetailView
 from django.shortcuts import redirect
 
 
 # Create your views here.
 class Index(ListView):
     template_name = 'blog/base_index.html'
-    context_object_name = 'articles'
+    model = Article
+    ordering = ['-date']
     paginate_by = 10
-	
-    def get_queryset(self):
-        return Article.objects.order_by('-date')
 
 
 class ArticleView(View):
+
     def get(self, request, slug):
         # Tri les articles selon la date de publication
-        articles_full_list = Article.objects.filter(date__lte=timezone.now()).order_by('-date')
-
+        articles_full_list = Article.objects.order_by('-date')
         i = 0
         # récupération de la position dans la liste
         for article in articles_full_list:
             i += 1
             if article.slug == slug:
                 # très très sale
-                index = i
-
-        # Pagination
-        page = request.GET.get('page', index)
-        paginator_article = Paginator(articles_full_list, 1)
-        try:
-            articles = paginator_article.page(page)
-        except PageNotAnInteger:
-            articles = paginator_article.page(1)
-        except EmptyPage:
-            articles = paginator_article.page(paginator_article.num_pages)
-        return render(request, 'blog/base_article.html', {'articles': articles, 'user': self.request.user.pk})
+                index = i-1
+        previous_slug = None
+        next_slug = None
+        article = articles_full_list[index]
+        if index > 0:
+            previous_slug = articles_full_list[index-1].slug
+        if index < len(articles_full_list)-1:    
+            next_slug = articles_full_list[index+1].slug
+        
+        return render(request, 'blog/base_article.html', {'article': article, 'user': self.request.user.pk, 'previous_slug': previous_slug, 'next_slug': next_slug})
 
 
 class ArticleNewForm(CreateView):
