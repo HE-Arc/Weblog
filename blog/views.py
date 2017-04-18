@@ -58,8 +58,8 @@ class ArticleView(View):
 
 
 class ArticleNewForm(CreateView):
-    def get(self, request):
-        if request.user.is_authenticated:
+    # def get(self, request):
+    #     if request.user.is_authenticated:
             model = Article
 
             # derp = forms.CharField(widget=MarkdownWidget())
@@ -73,8 +73,8 @@ class ArticleNewForm(CreateView):
                 form.instance.slug = form.instance.title
 
                 return super().form_valid(form)
-        else:
-            return redirect('/weblog/')
+        # else:
+        #     return redirect('/weblog/')
 
 
 class AuthView(View):
