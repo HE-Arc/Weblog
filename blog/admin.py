@@ -7,7 +7,7 @@ from markdownx.admin import MarkdownxModelAdmin
 
 class ArticleAdmin(admin.ModelAdmin):
     # fields = ('title', 'body', 'view_cat_name', 'tags', 'slug')
-    fields = ('title', 'body', 'tags', 'slug', 'author')
+    fields = ('title', 'body', 'tags', 'author')
 
     # def view_cat_name(self, obj):
     #     return obj.name
