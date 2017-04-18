@@ -49,7 +49,7 @@ class ArticleView(View):
         comments_full_list = Comment.objects.order_by('-date')
         comments_article_list = None
         for comment in comments_full_list:
-            if comment.article == article.author: #author before Lancelot implements comment_id
+            if comment.article == article.slug: 
                 comments_article_list.add(comment)
         return render(request, 'blog/base_article.html', {'article': article, 'user': self.request.user.pk, 'previous_slug': previous_slug, 'next_slug': next_slug, 'comments': comments_article_list})
     
