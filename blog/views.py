@@ -14,6 +14,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list import ListView
 from django.views.generic import DetailView
 from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
@@ -47,22 +48,24 @@ class ArticleView(View):
         return render(request, 'blog/base_article.html', {'article': article, 'user': self.request.user.pk, 'previous_slug': previous_slug, 'next_slug': next_slug})
 
 
-class ArticleNewForm(CreateView):
+class ArticleNewForm(LoginRequiredMixin ,CreateView):
     # def get(self, request):
     #     if request.user.is_authenticated:
-            model = Article
 
-            # derp = forms.CharField(widget=MarkdownWidget())
-            fields = ["title", "body"]
-            # TODO: succes url
-            success_url = '/weblog/'
+    model = Article
 
-            def form_valid(self, form):
-                form.instance.author_id = self.request.user.pk
-                form.instance.date = timezone.now()
-                form.instance.slug = form.instance.title
+    # derp = forms.CharField(widget=MarkdownWidget())
+    fields = ["title", "body"]
+    success_url = '/weblog/'
+    redirect_field_name = '/weblog/'
 
-                return super().form_valid(form)
+
+    def form_valid(self, form):
+        form.instance.author_id = self.request.user.pk
+        form.instance.date = timezone.now()
+        form.instance.slug = form.instance.title
+
+        return super().form_valid(form)
         # else:
         #     return redirect('/weblog/')
 
