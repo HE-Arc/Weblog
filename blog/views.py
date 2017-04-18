@@ -11,25 +11,18 @@ from django_markdown.widgets import MarkdownWidget
 import markdown
 from django import forms
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic.list import ListView
 from django.shortcuts import redirect
 
 
 # Create your views here.
-class Index(View):
-    def get(self, request):
-        # Tri les articles selon la date de publication
-        articles_full_list = Article.objects.filter(date__lte=timezone.now()).order_by('-date')
-
-        # Pagination
-        page = request.GET.get('page', 1)
-        paginator_index = Paginator(articles_full_list, 10)
-        try:
-            articles = paginator_index.page(page)
-        except PageNotAnInteger:
-            articles = paginator_index.page(1)
-        except EmptyPage:
-            articles = paginator_index.page(paginator_index.num_pages)
-        return render(request, 'blog/base_index.html', {'articles': articles, 'user': self.request.user.pk})
+class Index(ListView):
+    template_name = 'blog/base_index.html'
+    context_object_name = 'articles'
+    paginate_by = 10
+	
+    def get_queryset(self):
+        return Article.objects.order_by('-date')
 
 
 class ArticleView(View):

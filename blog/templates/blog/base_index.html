@@ -1,21 +1,21 @@
 {% extends "blog/base.html" %}
 
 {% block content %}
-{% for article in articles %}
+{% for article in object_list %}
 	 <div class="blog-post">
 		<h2 class="blog-post-title"><a href="/article/{{ article.slug }}">{{ article.title }}</a></h2>
 		<p class="blog-post-meta">{{ article.date }} by <a href="#">{{ article.author }}</a></p>
 		<p>{{article.formatted_markdown|safe}}</p>
 	</div><!-- /.blog-post -->
 {% endfor %}
-{% if articles.has_other_pages %}
+{% if is_paginated %}
 	<nav>
 		<ul class="pager">
-			{% if articles.has_previous %}
-			<li><a href="?page={{ articles.previous_page_number }}">Previous</a></li>
+			{% if page_obj.has_previous %}
+			<li><a href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
 			{% endif %}
-			{% if articles.has_next %}
-			<li><a href="?page={{ articles.next_page_number }}">Next</a></li>
+			{% if page_obj.has_next %}
+			<li><a href="?page={{ page_obj.next_page_number }}">Next</a></li>
 			{% endif %}
 		</ul>
 	 </nav>
