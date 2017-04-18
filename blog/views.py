@@ -103,7 +103,7 @@ class SearchView(ListView):
 class add_comment_to_post(CreateView):
     model = Comment
 
-    fields = ["content"]
+    fields = ["content","email","author"]
     success_url = "/weblog/"
 
     def form_valid(self, form):
