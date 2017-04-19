@@ -76,7 +76,7 @@ class Comment(models.Model):
     author = models.CharField(max_length=30)
     content = models.CharField(max_length=1000)
     email = models.EmailField()
-    date = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
     article = models.ForeignKey('Article', on_delete=models.CASCADE, related_name="comments")
 
     def __str__(self):
