@@ -1,0 +1,5 @@
+Django>=1.11,<2.0
+django-autoslug>=1.9.3
+django-markdownx>=1.8.1
+
+psycopg2>=2.7.1

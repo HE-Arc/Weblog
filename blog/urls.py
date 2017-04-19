@@ -13,6 +13,7 @@ urlpatterns = [
     # url(r'^article/(?P<slug>[\w-]+)/comment/$', views.add_comment_to_post, name='add_comment_to_post'),
     url(r'^article/(?P<slug>[\w-]+)/comment/$', add_comment_to_post.as_view(), name='add_comment_to_post'),
     # url(r'^article/(?P<slug>\d+)/comment/$', add_comment_to_post.as_view(), name='add_comment_to_post'),
+    # FIXME: Ceci ne peut pas fonctionner. --Yoan
 	url(r'^/?q=[\w-]+', SearchView.as_view()),
 ]
 
