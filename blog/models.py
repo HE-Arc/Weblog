@@ -35,7 +35,7 @@ class Tag(models.Model):
 
 class Article(models.Model):
     title = models.CharField(max_length=134)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
     # body = models.TextField()
     body = MarkdownxField()
 
