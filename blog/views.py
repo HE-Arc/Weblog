@@ -1,22 +1,12 @@
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Article, Comment
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
 from django.views import View
 from django.views.generic import CreateView
-from .forms import PostArticleForm
-from django.contrib.auth import authenticate, login
-from django_markdown.widgets import MarkdownWidget
-import markdown
-from django import forms
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.list import ListView
-from django.views.generic import DetailView
-from django.shortcuts import redirect
-from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import CommentForm
 
+from .models import Article, Comment
 
 # Create your views here.
 class Index(ListView):
@@ -31,6 +21,7 @@ class ArticleView(View):
     def get(self, request, slug):
         # Tri les articles selon la date de publication
         articles_full_list = Article.objects.order_by('-date')
+        # XXX: WTF!
         i = 0
         # récupération de la position dans la liste
         for article in articles_full_list:
@@ -48,6 +39,7 @@ class ArticleView(View):
 
         # Récupère tous les commentaires
         comments_full_list = Comment.objects.order_by('-date')
+        # XXX: WTF²!
         comments_article_list = None
         for comment in comments_full_list:
             if comment.article == article.slug:
@@ -91,7 +83,7 @@ class AuthView(View):
 
 class SearchView(ListView):
     template_name = 'blog/base_index.html'
-		
+
     #Récupère tous les articles
     comments_full_list = Comment.objects.order_by('-date')
     articles_list = None

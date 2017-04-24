@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import permalink
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from autoslug import AutoSlugField
@@ -13,18 +12,6 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-
-
-#
-# class User(models.Model):
-#     name = models.CharField(max_length=100)
-#     # infos: stuff about user
-#     infos = models.CharField(max_length=1000)
-#
-#     def __str__(self):
-#         return self.name
-
-
 
 class Tag(models.Model):
     name = models.CharField(max_length=20)
@@ -58,9 +45,6 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
-
-    def __unicode__(self):
-        return title
 
     # @permalink
     def get_absolute_url(self):
